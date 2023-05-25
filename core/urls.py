@@ -23,6 +23,8 @@ from rest_framework import status
 from rest_framework.permissions import IsAuthenticated
 
 from django.contrib.auth.models import User
+# make_password
+from django.contrib.auth.hashers import make_password
 
 
 class LoginHome(APIView):
@@ -31,7 +33,20 @@ class LoginHome(APIView):
     def get(self, request):
         content = {'message': 'Hello, World!'}
         return Response(content)
-    
+
+
+class Resigter(APIView):
+    def post(self, request):
+        try:
+            data = request.data
+            user = User.objects.create(
+                username=data['username'],
+                password=make_password(str(data['password'])),
+            )
+            user.save()
+            return Response(status=status.HTTP_201_CREATED)
+        except:
+            return Response(status=status.HTTP_400_BAD_REQUEST)
 
 
 urlpatterns = [
@@ -40,4 +55,5 @@ urlpatterns = [
     path('lesson/', include('LessonPlanner.urls')),
     path('payment/', include('PayMents.urls')),
     path('login/', LoginHome.as_view()),
+    path('register/', Resigter.as_view()),
 ]
