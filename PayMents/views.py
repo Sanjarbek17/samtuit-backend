@@ -2,6 +2,7 @@ from django.shortcuts import render
 
 from .serializers import PaymentSerializer
 from rest_framework.views import APIView
+from rest_framework.status import HTTP_404_NOT_FOUND
 
 from rest_framework.response import Response
 from rest_framework.request import Request
@@ -28,10 +29,18 @@ class PaymentView(APIView):
             return Response(serializer.data)
         return Response(serializer.errors)
     
-    def get(self, request):
-        payments = Payment.objects.all()
-        serializer = PaymentSerializer(payments, many=True)
-        return Response(serializer.data)
+    def get(self, request, fk=None):
+        if fk is None:
+            payments = Payment.objects.all()
+            serializer = PaymentSerializer(payments, many=True)
+            return Response(serializer.data)
+        else:
+            try:
+                payment = Payment.objects.get(student=fk)
+                serializer = PaymentSerializer(payment)
+                return Response(serializer.data)
+            except:
+                return Response({'status': 'no payment'})
     
     def put(self, request, pk):
         payment = Payment.objects.get(id=pk)
@@ -60,7 +69,6 @@ class Delet_Payment(APIView):
             return Response("Payment Not Found")
         
         
-    
 
         
 

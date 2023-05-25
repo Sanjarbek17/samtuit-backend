@@ -71,7 +71,7 @@ class StudentDeleteView(APIView):
         try:
             student = Student.objects.get(id=pk) # get student by id
             student.delete() # delete student
-            return Response({'status': 'student deleted'}, status=status.HTTP_204_NO_CONTENT) # return success message
+            return Response({'status': 'student deleted'}) # return success message
         except ObjectDoesNotExist:
             return Response({'status': 'student does not exist'}, status=status.HTTP_404_NOT_FOUND)
 
