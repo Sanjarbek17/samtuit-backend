@@ -15,7 +15,7 @@ class Student(models.Model):
     last_name    = models.CharField(max_length=50, blank=True)
     github       = models.CharField(max_length=64, unique=True)
     codewars     = models.CharField(max_length=64, blank=True, unique=True, null=True)
-    status       = models.ForeignKey(StudentStatus, on_delete=models.DO_NOTHING)
+    # status       = models.ForeignKey(StudentStatus, on_delete=models.CASCADE)
     phone        = models.CharField(max_length=20, blank=True)
     email        = models.CharField(max_length=127, blank=True, unique=True, null=True)
     tg_username  = models.CharField(max_length=64, blank=True, unique=True, null=True)
