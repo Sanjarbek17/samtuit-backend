@@ -1,5 +1,5 @@
 from django.db import models
-from ClassRoom.models import Student, Group, Course
+from ClassRoom.models import Student, Group, University
 
 
 class AssignmentType(models.Model):
@@ -14,7 +14,7 @@ class AssignmentType(models.Model):
 class Assignment(models.Model):
     name = models.CharField(max_length=50)
     description = models.TextField(blank=True)
-    course = models.ForeignKey(Course, on_delete=models.DO_NOTHING)
+    course = models.ForeignKey(University, on_delete=models.DO_NOTHING)
     link = models.URLField(blank=True)
     type = models.ForeignKey(AssignmentType, on_delete=models.DO_NOTHING)
     date_created = models.DateTimeField(auto_now_add=True)
@@ -45,11 +45,10 @@ class Task(models.Model):
         return self.name
 
 
-class Lesson(models.Model):
+class IlmiyIsh(models.Model):
     name = models.CharField(max_length=50, unique=True)
     description = models.TextField(blank=True)
-    group = models.ForeignKey(Group, on_delete=models.CASCADE)
-    assignments = models.ManyToManyField(Assignment)
+    file = models.FileField(upload_to='ilmiy_ish/', blank=True)
     date_created = models.DateTimeField(auto_now_add=True)
     date_updated = models.DateTimeField(auto_now=True)
 
@@ -59,7 +58,7 @@ class Lesson(models.Model):
 
 class Muster(models.Model):
     student = models.ManyToManyField(Student)
-    lesson = models.ForeignKey(Lesson, on_delete=models.CASCADE)
+    lesson = models.ForeignKey(IlmiyIsh, on_delete=models.CASCADE)
     date_created = models.DateTimeField(auto_now_add=True)
     date_updated = models.DateTimeField(auto_now=True)
 

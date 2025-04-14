@@ -9,7 +9,7 @@ from .models import (
     Student,
     TeacherType,
     Teacher,
-    Course,
+    University,
     Group,
 )
 
@@ -18,7 +18,7 @@ from .serializers import (
     StudentSerializer,
     TeacherTypeSerializer,
     TeacherSerializer,
-    CourseSerializer,
+    UniversitySerializer,
     GroupSerializer,
 )
 
@@ -93,31 +93,31 @@ class StudentsView(APIView):
             return Response(serializer.data) # return students
 
 
-class CourseView(APIView):
+class UniversityView(APIView):
     def get(self, request: Request) -> Response:
         '''get all courses'''
-        courses = Course.objects.all() # get all courses
-        serializer = CourseSerializer(courses, many=True) # serialize courses
+        courses = University.objects.all() # get all courses
+        serializer = UniversitySerializer(courses, many=True) # serialize courses
         return Response(serializer.data) # return courses
 
 
-class CourseCreateView(APIView):
+class UniversityCreateView(APIView):
     def post(self, request: Request) -> Response:
         '''create new course'''
         data = request.data # get data from request
-        serializer = CourseSerializer(data=data) # serialize data
+        serializer = UniversitySerializer(data=data) # serialize data
         if serializer.is_valid():
             serializer.save()
             return Response(serializer.data, status=status.HTTP_201_CREATED)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
 
-class CourseUpdateView(APIView):
+class UniversityUpdateView(APIView):
     def post(self, request: Request, pk: int) -> Response:
         '''update course by id'''
         try:
-            course = Course.objects.get(id=pk) # get course by id
-            serializer = CourseSerializer(course, data=request.data) # serialize data
+            course = University.objects.get(id=pk) # get course by id
+            serializer = UniversitySerializer(course, data=request.data) # serialize data
             if serializer.is_valid():
                 serializer.save()
                 return Response(serializer.data, status=status.HTTP_202_ACCEPTED)
@@ -126,11 +126,11 @@ class CourseUpdateView(APIView):
             return Response({'status': 'course does not exist'}, status=status.HTTP_404_NOT_FOUND)
 
 
-class CourseDeleteView(APIView):
+class UniversityDeleteView(APIView):
     def post(self, request: Request, pk: int) -> Response:
         '''delete course by id'''
         try:
-            course = Course.objects.get(id=pk) # get course by id
+            course = University.objects.get(id=pk) # get course by id
             course.delete() # delete course
             return Response({'status': 'course deleted'}, status=status.HTTP_204_NO_CONTENT)
         except ObjectDoesNotExist:
@@ -300,3 +300,10 @@ class GetTeacher(APIView):
             return Response(serializer.data) # return teacher
         except ObjectDoesNotExist:
             return Response({'status': 'teacher does not exist'}, status=status.HTTP_404_NOT_FOUND)
+
+class GetAllTeacher(APIView):
+    def get(self, request: Request) -> Response:
+        '''get all teacher'''
+        teacher = Teacher.objects.all()
+        serializer = TeacherSerializer(teacher, many=True) # serialize teacher
+        return Response(serializer.data) # return teacher

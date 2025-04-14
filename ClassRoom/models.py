@@ -13,8 +13,6 @@ class StudentStatus(models.Model):
 class Student(models.Model):
     first_name   = models.CharField(max_length=50)
     last_name    = models.CharField(max_length=50, blank=True)
-    github       = models.CharField(max_length=64, unique=True)
-    codewars     = models.CharField(max_length=64, blank=True, unique=True, null=True)
     # status       = models.ForeignKey(StudentStatus, on_delete=models.CASCADE)
     phone        = models.CharField(max_length=20, blank=True)
     email        = models.CharField(max_length=127, blank=True, unique=True, null=True)
@@ -45,9 +43,6 @@ class TeacherType(models.Model):
 class Teacher(models.Model):
     first_name   = models.CharField(max_length=50)
     last_name    = models.CharField(max_length=50, blank=True)
-    type         = models.ForeignKey(TeacherType, on_delete=models.DO_NOTHING)
-    github       = models.CharField(max_length=64, unique=True)
-    codewars     = models.CharField(max_length=64, blank=True, unique=True, null=True)
     phone        = models.CharField(max_length=20, blank=True)
     email        = models.CharField(max_length=127, blank=True, unique=True, null=True)
     tg_username  = models.CharField(max_length=64, blank=True, unique=True, null=True)
@@ -65,7 +60,7 @@ class Teacher(models.Model):
         return self.full_name
 
 
-class Course(models.Model):
+class University(models.Model):
     name         = models.CharField(max_length=50, unique=True)
     description  = models.TextField(blank=True)
     date_created = models.DateTimeField(auto_now_add=True)
@@ -78,7 +73,7 @@ class Course(models.Model):
 class Group(models.Model):
     name         = models.CharField(max_length=50, unique=True)
     description  = models.TextField(blank=True)
-    course       = models.ForeignKey(Course, on_delete=models.DO_NOTHING)
+    course       = models.ForeignKey(University, on_delete=models.DO_NOTHING)
     students     = models.ManyToManyField(Student, blank=True)
     teachers     = models.ManyToManyField(Teacher, blank=True)
     date_created = models.DateTimeField(auto_now_add=True)

@@ -1,19 +1,19 @@
 from django.contrib import admin
 from .models import (
-    StudentStatus,
+    # StudentStatus,
     Student,
-    TeacherType,
+    # TeacherType,
     Teacher,
-    Course,
-    Group,
+    University,
+    # Group,
 )
 
 
 admin.site.register((
-    StudentStatus,
+    # StudentStatus,
     Student,
-    TeacherType,
+    # TeacherType,
     Teacher,
-    Course,
-    Group,
+    University,
+    # Group,
 ))

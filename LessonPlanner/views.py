@@ -10,7 +10,7 @@ from .models import (
     Assignment,
     TaskLevel,
     Task,
-    Lesson,
+    IlmiyIsh,
     Muster,
     Submission,
 )
@@ -18,13 +18,13 @@ from .models import (
 from ClassRoom.models import (
     Student,
     Group,
-    Course,
+    University,
 )
 
 from .serializers import (
     TaskSerializer, 
     AssignmentSerializer,
-    LessonSerializer,
+    IlmiyIshSerializer,
     SubmissionSerializer,
     GetAssignmentSerializer,
 )
@@ -37,7 +37,7 @@ class TaskCreateView(APIView):
         try:
             if data.get('assignment') is None or data.get('level') is None or data.get('course') is None:
                 return Response(status=status.HTTP_400_BAD_REQUEST) # return error and status code
-            course = Course.objects.get(name=data['course'])
+            course = University.objects.get(name=data['course'])
             print(course)
             data['course'] = course.pk # set course to course object
             assignment = Assignment.objects.get(name=data['assignment'], course=course) # get assignment by id
@@ -106,7 +106,7 @@ class AssignmentView(APIView):
     def get(self, request: Request, pk=None) -> Response:
         '''Get assignments by lesson id'''
         try:
-            lesson = Lesson.objects.get(id=pk) # get lesson by id
+            lesson = IlmiyIsh.objects.get(id=pk) # get lesson by id
             assignments = lesson.assignments.all() # get all assignments by lesson id
             serializer = GetAssignmentSerializer(assignments, many=True) # create serializer
             return Response(serializer.data, status=status.HTTP_200_OK) # return data and status code
@@ -145,12 +145,12 @@ class AssignmentDeleteView(APIView):
             return Response(status=status.HTTP_404_NOT_FOUND) # return error and status code
         
 
-class LessonCreateView(APIView):
+class IlmiyIshCreateView(APIView):
     def post(self, request: Request) -> Response:
         '''Create a new lesson'''
         data = request.data # get data from request
         try:
-            serializer = LessonSerializer(data=data) # create serializer
+            serializer = IlmiyIshSerializer(data=data) # create serializer
             if serializer.is_valid(): # check if data is valid
                 serializer.save() # save data to database
                 return Response(serializer.data, status=status.HTTP_201_CREATED) # return data and status code
@@ -159,17 +159,22 @@ class LessonCreateView(APIView):
             return Response(status=status.HTTP_404_NOT_FOUND) # return error and status code
 
 
-class LessonView(APIView):
+class IlmiyIshView(APIView):
     def get(self, request: Request, pk=None) -> Response:
         '''Get lessons by group id'''
         try:
-            lessons = Lesson.objects.filter(group=pk) # get lessons by group id
-            serializer = LessonSerializer(lessons, many=True) # create serializer
+            lessons = IlmiyIsh.objects.filter(group=pk) # get lessons by group id
+            serializer = IlmiyIshSerializer(lessons, many=True) # create serializer
             return Response(serializer.data, status=status.HTTP_200_OK) # return data and status code
         except ObjectDoesNotExist:
             return Response(status=status.HTTP_404_NOT_FOUND) # return error and status code
         
-
+class AllIlmiyIshView(APIView):
+    def get(self, request: Request) -> Response:
+        '''Get all lessons'''
+        lessons = IlmiyIsh.objects.all() # get all lessons
+        serializer = IlmiyIshSerializer(lessons, many=True) # create serializer
+        return Response(serializer.data, status=status.HTTP_200_OK) # return data and status code
 
 class SubmissionCreateView(APIView):
     def post(self, request: Request) -> Response:
@@ -189,7 +194,7 @@ class SubmissionCreateView(APIView):
 
         try:
             student = Student.objects.get(github=data['github']) # get student by github
-            course = Course.objects.get(name=data['course']) # get course by name
+            course = University.objects.get(name=data['course']) # get course by name
             assignment = Assignment.objects.get(name=data['assignment'], course=course) # get assignment by name and course
             for task in data['tasks']:
                 task_object = Task.objects.get(name=task['name'], assignment=assignment) # get task by name and assignment
@@ -204,7 +209,7 @@ class GetResultView(APIView):
         '''get results by lesson id and assignment id'''
         data = request.data # get data from request
         try:
-            lesson = Lesson.objects.get(id=data.get('lesson'))
+            lesson = IlmiyIsh.objects.get(id=data.get('lesson'))
             group = lesson.group
             assignment: Assignment = lesson.assignments.get(id=data.get('assignment'))
             tasks = Task.objects.filter(assignment=assignment)

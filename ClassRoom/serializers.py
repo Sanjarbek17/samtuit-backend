@@ -4,7 +4,7 @@ from .models import (
     Student,
     TeacherType,
     Teacher,
-    Course,
+    University,
     Group,
 )
 
@@ -33,9 +33,9 @@ class TeacherSerializer(serializers.ModelSerializer):
         fields = '__all__'
 
 
-class CourseSerializer(serializers.ModelSerializer):
+class UniversitySerializer(serializers.ModelSerializer):
     class Meta:
-        model = Course
+        model = University
         fields = '__all__'
 
 

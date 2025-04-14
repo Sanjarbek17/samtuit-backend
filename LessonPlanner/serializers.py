@@ -5,7 +5,7 @@ from .models import (
     Assignment,
     TaskLevel,
     Task,
-    Lesson,
+    IlmiyIsh,
     Muster,
     Submission,
 )
@@ -35,9 +35,9 @@ class TaskSerializer(serializers.ModelSerializer):
         fields = '__all__'
 
 
-class LessonSerializer(serializers.ModelSerializer):
+class IlmiyIshSerializer(serializers.ModelSerializer):
     class Meta:
-        model = Lesson
+        model = IlmiyIsh
         fields = '__all__'
 
 

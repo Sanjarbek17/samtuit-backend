@@ -10,8 +10,9 @@ from .views import (
     AssignmentUpdateView, # update an assignment by id
     AssignmentDeleteView, # delete an assignment by id
 
-    LessonView, # get all lessons or get lesson by group id
-    LessonCreateView, # create lesson,
+    IlmiyIshView, # get all lessons or get lesson by group id
+    AllIlmiyIshView,
+    IlmiyIshCreateView, # create lesson,
     SubmissionCreateView, # create submission
     GetResultView, # get result by goup id and lesson id, assignment id
 )
@@ -28,9 +29,10 @@ urlpatterns = [
     path('assignment/update/<int:pk>/', AssignmentUpdateView.as_view()), # update assignment by id
     path('assignment/delete/<int:pk>/', AssignmentDeleteView.as_view()), # delete assignment by id
 
-    path('get/<int:pk>/', LessonView.as_view()), # get lesson by group id
-    path('add/', LessonCreateView.as_view()), # create lesson
+    path('get/<int:pk>/', IlmiyIshView.as_view()), # get lesson by group id
+    path('add/', IlmiyIshCreateView.as_view()), # create lesson
 
     path('submission/add/', SubmissionCreateView.as_view()), # create submission
     path('result/', GetResultView.as_view()), # get result by goup id and lesson id, assignment id
+    path('all-lessons/', AllIlmiyIshView.as_view()), # get all lessons
 ]

@@ -15,4 +15,4 @@ You can see here [Database Schema](https://drive.google.com/file/d/1PNa8CFffu6Jy
 | APIs | descriptoin |
 |----------|-----|
 | [/](ClassRoom/README.md) | stduents, courses, groups urls |
-| [lesson/](LessonPlanner/README.md) | lesson planner urls |
+| [lesson/](IlmiyIshPlanner/README.md) | lesson planner urls |

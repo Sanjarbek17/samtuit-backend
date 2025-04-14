@@ -6,10 +6,10 @@ from .views import (
     StudentUpdateView, # update student
     StudentDeleteView, # delete student
     StudentsView, # get all students or get student by group id
-    CourseView, # get all courses
-    CourseCreateView, # create course
-    CourseUpdateView, # update course
-    CourseDeleteView, # delete course
+    UniversityView, # get all courses
+    UniversityCreateView, # create course
+    UniversityUpdateView, # update course
+    UniversityDeleteView, # delete course
     GroupView, # get all groups or get groups by course id
     GroupCreateView, # create group
     GroupUpdateView, # update group
@@ -21,7 +21,7 @@ from .views import (
     CreateTeacher,  # create teacher
     GetTeacherType, # get teacher type
     GetTeacher, # get teacher
-
+    GetAllTeacher,
 )
 
 
@@ -33,10 +33,10 @@ urlpatterns = [
     path('student/delete/<int:pk>/', StudentDeleteView.as_view()), # delete student
     path('student/all/', StudentsView.as_view()), # get all students
     path('students/<int:pk>/', StudentsView.as_view()), # get student by group id
-    path('course/', CourseView.as_view()), # get all courses
-    path('course/add/', CourseCreateView.as_view()), # create course
-    path('course/update/<int:pk>/', CourseUpdateView.as_view()), # update course
-    path('course/delete/<int:pk>/', CourseDeleteView.as_view()), # delete course
+    path('course/', UniversityView.as_view()), # get all courses
+    path('course/add/', UniversityCreateView.as_view()), # create course
+    path('course/update/<int:pk>/', UniversityUpdateView.as_view()), # update course
+    path('course/delete/<int:pk>/', UniversityDeleteView.as_view()), # delete course
     path('group/all/', GroupView.as_view()), # get all groups
     path('group/<int:pk>/', GroupView.as_view()), # get groups by course id
     path('group/add/', GroupCreateView.as_view()), # create group
@@ -51,4 +51,5 @@ urlpatterns = [
     path('create-teacher/<int:pk>/', CreateTeacher.as_view()), # update teacher
     path('get-teacher-type/<int:pk>/', GetTeacherType.as_view()), # get teacher type by id
     path('get-teacher/<int:pk>/', GetTeacher.as_view()), # get teacher by id
+    path('get-all-teacher/', GetAllTeacher.as_view()), # get all teacher
 ]
