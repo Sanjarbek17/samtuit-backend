@@ -25,6 +25,8 @@ from rest_framework.permissions import IsAuthenticated
 from django.contrib.auth.models import User
 # make_password
 from django.contrib.auth.hashers import make_password
+from django.conf import settings
+from django.conf.urls.static import static
 
 
 class LoginHome(APIView):
@@ -56,4 +58,4 @@ urlpatterns = [
     path('payment/', include('PayMents.urls')),
     path('login/', LoginHome.as_view()),
     path('register/', Resigter.as_view()),
-]
+] + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
